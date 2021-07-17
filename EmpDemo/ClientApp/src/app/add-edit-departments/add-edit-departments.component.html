@@ -1,0 +1,39 @@
+<h4 *ngIf="id">Edit Department</h4>
+<h4 *ngIf="!id">Add Department</h4>
+<form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+  <div>
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Department name</mat-label>
+      <input matInput formControlName="name" placeholder="Department name">
+    </mat-form-field>
+    <div *ngIf="myForm.get('name').invalid && (myForm.get('name').dirty || myForm.get('name').touched)">
+      Please provide a name.
+    </div>
+  </div>
+
+  <div *ngIf="employees">
+    <mat-form-field appearance="fill">
+      <mat-label>Select a Employee</mat-label>
+      <mat-select formControlName="empName">
+        <mat-option *ngFor="let emp of employees" value="{{emp.id}}">
+          {{emp.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button type="button" mat-mini-fab color="primary" (click)="add()">
+      <mat-icon>control_point</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="dpt.employees.length>0">
+    Employee List
+    <mat-chip-list>
+      <mat-chip *ngFor="let emp of dpt.employees" (removed)="remove(emp.id)">
+        {{emp.name}}
+        <mat-icon matChipRemove>cancel</mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+  <br />
+  <button type="submit" mat-raised-button color="primary" [disabled]="myForm.invalid">Send</button>
+</form>

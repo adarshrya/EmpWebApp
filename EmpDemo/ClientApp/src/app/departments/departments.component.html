@@ -1,0 +1,32 @@
+ 
+<a mat-mini-fab color="primary" [routerLinkActive]="['link-active']" [routerLink]="['/Departments/Add']">
+  <mat-icon aria-hidden="false" aria-label="">add_chart</mat-icon>
+</a> 
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="departments">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Employees</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let department  of departments">
+      <td>{{ department.name }}</td>
+      <td>
+        <mat-chip-list>
+          <mat-chip *ngFor="let emp of department.employees">
+            {{emp.name}}
+          </mat-chip>
+        </mat-chip-list>
+      </td> 
+      <td>
+        <a mat-mini-fab color="primary" [routerLinkActive]="['link-active']" [routerLink]="['/Departments/Edit/'+department.id]"><mat-icon aria-hidden="false" aria-label="">edit</mat-icon></a>
+      </td>
+      <td>
+        <a mat-mini-fab color="warn" (click)="delete(department.id)"><mat-icon aria-hidden="false" aria-label="">delete</mat-icon></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
